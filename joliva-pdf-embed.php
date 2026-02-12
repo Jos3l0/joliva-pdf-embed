@@ -2,7 +2,7 @@
 /**
  * Plugin Name: JO PDF Embed + Download
  * Description: Convierte URLs de PDF en visores embebidos con botón de descarga y agrega un bloque de Gutenberg para insertar PDFs fácilmente.
- * Author: Jose Oliva
+ * Author: Equipo Portal Educativo DGE Bob. de Mendoza
  * Version: 2.2.0
  * Text Domain: joliva-pdf-embed
  */
