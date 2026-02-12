@@ -108,6 +108,6 @@ GNU General Public License for more details.
 
 **Versión:** 2.2.0  
 **Requiere WordPress:** 5.0+  
-<<<<<<< HEAD
+
 **Probado hasta:** 6.9
 **Requiere PHP:** 7.4+
