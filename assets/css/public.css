@@ -1,0 +1,195 @@
+:root {
+  --jpe-pdf-height: 800px;
+}
+
+.jpe-pdf-wrapper {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.jpe-pdf-embed {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #525252;
+  height: var(--jpe-pdf-height);
+}
+
+.jpe-pdf-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.jpe-pdf-download {
+  margin-top: 0.875rem;
+  display: flex;
+  justify-content: center;
+}
+
+.jpe-pdf-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  min-height: 40px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  max-width: 280px;
+}
+
+.jpe-pdf-button-icon {
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.jpe-pdf-button-text {
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.jpe-pdf-button:hover {
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+.jpe-pdf-button:focus {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.jpe-pdf-button:active {
+  background: #1e40af;
+}
+
+@media (max-width: 767px) {
+  .jpe-pdf-wrapper {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+
+  .jpe-pdf-embed {
+    height: 600px;
+    border-radius: 6px;
+  }
+
+  .jpe-pdf-download {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .jpe-pdf-wrapper {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .jpe-pdf-wrapper {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+}
+
+@media (min-width: 1280px) {
+  .jpe-pdf-wrapper {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .jpe-pdf-wrapper {
+    background-color: #1f2937;
+    border-color: #374151;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .jpe-pdf-button {
+    background: #3b82f6;
+  }
+
+  .jpe-pdf-button:hover {
+    background: #2563eb;
+  }
+
+  .jpe-pdf-button:focus {
+    outline-color: #60a5fa;
+  }
+
+  .jpe-pdf-button:active {
+    background: #1d4ed8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jpe-pdf-button {
+    transition: none;
+  }
+}
+
+@media print {
+  .jpe-pdf-wrapper {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+
+  .jpe-pdf-embed {
+    display: none;
+  }
+
+  .jpe-pdf-download {
+    margin-top: 0.5rem;
+  }
+
+  .jpe-pdf-button {
+    box-shadow: none;
+    border: 2px solid #2563eb;
+  }
+}
+
+.jpe-block-editor-preview {
+  padding: 1rem;
+  background-color: #f9fafb;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.jpe-block-editor-preview .jpe-pdf-embed {
+  height: 400px;
+}
+
+.jpe-block-editor-preview p {
+  color: #6b7280;
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 0;
+}
