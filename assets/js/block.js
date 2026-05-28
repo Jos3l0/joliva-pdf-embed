@@ -6,8 +6,6 @@
 
   const __ = i18n.__;
 
-  const jpePdfViewerUrl = jpePluginUrl + "assets/pdfjs/web/viewer.html";
-
   blocks.registerBlockType("jpe/pdf-viewer", {
     title: __("Visor de PDF (JO)", "joliva-pdf-embed"),
     icon: "media-document",
@@ -82,9 +80,9 @@
                   el("iframe", {
                     className: "jpe-pdf-iframe",
                     src:
-                      jpePdfViewerUrl +
-                      "?file=" +
-                      encodeURIComponent(attributes.url),
+                      "https://docs.google.com/viewer?url=" +
+                      encodeURIComponent(attributes.url) +
+                      "&embedded=true",
                     title: __("Vista previa del PDF", "joliva-pdf-embed"),
                   }),
                 ),

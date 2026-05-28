@@ -2,7 +2,7 @@
 /**
  * Plugin Name: JO PDF Embed + Download
  * Description: Convierte URLs de PDF en visores embebidos con botón de descarga y agrega un bloque de Gutenberg para insertar PDFs fácilmente.
- * Author: Equipo Portal Educativo DGE Gob. de Mendoza
+ * Author: Portal Educativo DGE Gob. de Mendoza
  * Version: 2.2.0
  * Text Domain: joliva-pdf-embed
  */
@@ -18,7 +18,7 @@ define( 'JPE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'JPE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
- * Encolar estilos y scripts públicos
+ * Encolar estilos públicos
  */
 function jpe_enqueue_public_assets() {
     wp_enqueue_style(
@@ -29,18 +29,6 @@ function jpe_enqueue_public_assets() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'jpe_enqueue_public_assets' );
-
-/**
- * Encolar script para el editor Gutenberg
- */
-function jpe_enqueue_editor_assets() {
-    wp_localize_script(
-        'jpe-block-script',
-        'jpePluginUrl',
-        JPE_PLUGIN_URL
-    );
-}
-add_action( 'enqueue_block_editor_assets', 'jpe_enqueue_editor_assets' );
 
 /**
  * Genera el HTML del visor PDF + botón descarga
@@ -56,26 +44,25 @@ function jpe_get_pdf_embed_html( $url, $button_label = 'Descargar PDF' ) {
     $button_label = esc_html( $button_label );
     $file_name    = basename( parse_url( $pdf_url, PHP_URL_PATH ) );
 
-    $viewer_url = JPE_PLUGIN_URL . 'assets/pdfjs/web/viewer.html?file=' . urlencode( $pdf_url );
-
     ob_start();
     ?>
     <div class="jpe-pdf-wrapper">
         <div class="jpe-pdf-embed">
             <iframe
                 class="jpe-pdf-iframe"
-                src="<?php echo esc_url( $viewer_url ); ?>"
+                src="https://docs.google.com/viewer?url=<?php echo urlencode( $pdf_url ); ?>&amp;embedded=true"
                 title="<?php echo esc_attr( sprintf( 'Documento PDF: %s', $file_name ) ); ?>"
                 loading="lazy"
                 allowfullscreen
+                frameborder="0"
             ></iframe>
         </div>
 
         <div class="jpe-pdf-download">
-            <a 
-                class="jpe-pdf-button" 
-                href="<?php echo $pdf_url; ?>" 
-                target="_blank" 
+            <a
+                class="jpe-pdf-button"
+                href="<?php echo $pdf_url; ?>"
+                target="_blank"
                 rel="noopener noreferrer"
                 download="<?php echo esc_attr( $file_name ); ?>"
             >
@@ -89,7 +76,8 @@ function jpe_get_pdf_embed_html( $url, $button_label = 'Descargar PDF' ) {
 }
 
 /**
- * Filtro para reemplazar URLs de PDF en el contenido por el visor embebido
+ * Filtro para reemplazar SOLO URLs sueltas de PDF en el contenido por el visor embebido.
+ * Si el PDF está enlazado desde un texto (anchor <a>), se respeta el enlace.
  */
 function jpe_filter_content_pdfs( $content ) {
 
@@ -97,19 +85,9 @@ function jpe_filter_content_pdfs( $content ) {
         return $content;
     }
 
-    // 1) Enlaces <a href="...pdf">...</a>
+    // URLs sueltas que terminen en .pdf y que NO formen parte de un href="...pdf"
     $content = preg_replace_callback(
-        '/<a([^>]+)href=["\'](https?:\/\/[^"\']+\.pdf)["\']([^>]*)>.*?<\/a>/i',
-        function ( $matches ) {
-            $url = $matches[2];
-            return jpe_get_pdf_embed_html( $url );
-        },
-        $content
-    );
-
-    // 2) URLs sueltas que terminen en .pdf
-    $content = preg_replace_callback(
-        '~(https?://[^\s"\']+\.pdf)~i',
+        '~(?<!href=["\'])(https?://[^\s"\']+\.pdf)~i',
         function ( $matches ) {
             $url = $matches[1];
             return jpe_get_pdf_embed_html( $url );
@@ -140,11 +118,11 @@ function jpe_register_gutenberg_block() {
             'editor_script'   => 'jpe-block-script',
             'render_callback' => 'jpe_render_pdf_block',
             'attributes'      => array(
-                'url'           => array(
+                'url'            => array(
                     'type'    => 'string',
                     'default' => '',
                 ),
-                'buttonText'    => array(
+                'buttonText'     => array(
                     'type'    => 'string',
                     'default' => 'Descargar PDF',
                 ),
@@ -152,7 +130,7 @@ function jpe_register_gutenberg_block() {
                     'type'    => 'string',
                     'default' => 'Ver pantalla completa',
                 ),
-                'height'        => array(
+                'height'         => array(
                     'type'    => 'string',
                     'default' => 'auto',
                 ),
